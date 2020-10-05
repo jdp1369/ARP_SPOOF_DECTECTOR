@@ -22,9 +22,7 @@ def process_sniffed_packet(packet):
             response_mac = packet[scapy.ARP].hwsrc
 
             if real_mac!=response_mac:
-                print("[+] You are under ARP Attack!!")#add an error song or send mails for this bitch !'_'!
-		#call email function
-		#test Alpha
+                print("[+] You are under ARP Attack!!")
         except IndexError:
             pass
 
