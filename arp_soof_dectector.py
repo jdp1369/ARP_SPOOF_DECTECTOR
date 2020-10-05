@@ -1,7 +1,15 @@
 #!/usr/bin/env python
 import scapy.all as scapy
 import optparse
+import smtplib
 
+def get_parameters():
+	parser=optprase.OptionParser()
+	parser.add_option("-i", "--interface",dest="interface",help="provide interface to run")
+	(options, argument)=parser.parse_args()
+	if not options.interface:
+		parser.error("use --help for more info")
+	return options
 
 def get_mac(ip):
     arp_request =scapy.ARP(pdst=ip)
@@ -22,9 +30,11 @@ def process_sniffed_packet(packet):
             response_mac = packet[scapy.ARP].hwsrc
 
             if real_mac!=response_mac:
-                print("[+] You are under ARP Attack!!")#add an error song or send mails for this bitch !'_'!
-		#call email function
-		#test Alpha
+                print("[+] You are under ARP Attack!!")
+		server=smtplib.SMTP("smtp.gmail.com",578)
+		server.starttls()
+		server.login(email, passwd)
+		server.sendmail(email,passwd,"you are under attack")
         except IndexError:
             pass
 
